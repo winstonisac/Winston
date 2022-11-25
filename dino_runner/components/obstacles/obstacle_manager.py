@@ -4,7 +4,7 @@ import random
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.bird import Bird
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
-
+from dino_runner.utils.constants import HAMMER_TYPE, SHIELD_TYPE, GODZHELP_TYPE
 
 class ObstacleManager:
     def __init__(self):
@@ -27,7 +27,11 @@ class ObstacleManager:
                     game.playing = False
                     game.death_count += 1
                     break
-                else:                    
+                elif game.player.type == SHIELD_TYPE:
+                    game.playing = True   
+                elif game.player.type == HAMMER_TYPE:                 
+                    self.obstacles.remove(obstacle)
+                elif game.player.type == GODZHELP_TYPE:                 
                     self.obstacles.remove(obstacle)
 
     def reset_obstacles(self):

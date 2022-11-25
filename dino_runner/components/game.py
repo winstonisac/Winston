@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from dino_runner.utils.text_utils import draw_message_component
@@ -6,6 +7,10 @@ from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 
+mixer.init()
+
+mixer.music.load("backgroundmario.mp3")
+mixer.music.play(1)
 
 class Game:
     def __init__(self):
@@ -30,12 +35,10 @@ class Game:
         while self.running:
             if not self.playing:
                 self.show_menu()
-        
         pygame.display.quit()
         pygame.quit()
 
     def run(self):
-        # Game loop: events - update - draw
         self.playing = True
         self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups()
@@ -66,7 +69,7 @@ class Game:
 
     def draw(self):
         self.clock.tick(FPS)
-        self.screen.fill((255, 255, 255)) #ffffff
+        self.screen.fill((255, 255, 255)) 
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
@@ -134,7 +137,7 @@ class Game:
                 self.screen,
                 pos_y_center=half_screen_height - 100
             )
-            self.screen.blit(ICON, (half_screen_width - 40, half_screen_height - 40))
+            self.screen.blit(ICON, (half_screen_width - 40, half_screen_height - 70))
 
         pygame.display.update()
         self.handle_events_menu()
